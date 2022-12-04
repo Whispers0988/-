@@ -205,10 +205,10 @@ bool WeiqiGameManager::doLuozi(ActionInfo& actInfo) {
 void WeiqiGameManager::doFinish(ActionInfo& actInfo) {
 	judge(actInfo.winner);
 	if (actInfo.winner == 0) {
-		actInfo.strInfo = L"°×Æå:" + to_wstring(result[0]) + L"×Ó  ºÚÆå£º" + to_wstring(result[1]) + L"×Ó °×ÆåÊ¤£¡";
+		actInfo.strInfo += L"\n°×Æå:" + to_wstring(result[0]) + L"×Ó  ºÚÆå£º" + to_wstring(result[1]) + L"×Ó °×ÆåÊ¤£¡";
 	}
 	else {
-		actInfo.strInfo = L"ºÚÆå:" + to_wstring(result[1]) + L"×Ó  °×Æå£º" + to_wstring(result[0]) + L"×Ó ºÚÆåÊ¤£¡";
+		actInfo.strInfo += L"\nºÚÆå:" + to_wstring(result[1]) + L"×Ó  °×Æå£º" + to_wstring(result[0]) + L"×Ó ºÚÆåÊ¤£¡";
 	}
 }
 

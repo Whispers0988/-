@@ -37,6 +37,7 @@ public:
 
 	void setImgBackGround(LPCTSTR path);
 
+	void loadLog(std::wstring strInfo);
 
 protected:
 

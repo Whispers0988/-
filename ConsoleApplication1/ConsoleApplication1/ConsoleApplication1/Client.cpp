@@ -26,6 +26,15 @@ void Client::init() {
 	exit.draw();
 }
 
+void Client::loadLog(std::wstring strInfo) {
+	while (strInfo.find(L'\n') != wstring::npos) {
+		int index = strInfo.find(L'\n');
+		strLogs.push_back(strInfo.substr(0, index));
+		strInfo.erase(0, index + 1);
+	}
+	strLogs.push_back(strInfo);
+}
+
 void Client::Start() {
 	while (1) {
 		ExMessage msg;
@@ -41,6 +50,11 @@ void Client::Start() {
 					gm = fc.createGameManager(type, road);
 					isweiqi = true;
 					break;
+				}
+				else {
+					MessageBox(GetHWnd(), L"您输入的棋盘大小有误！游戏创建失败！", L"错误", 0);
+					flushmessage(EM_MOUSE);
+					continue;
 				}
 			}
 			else if (wuziqi.isIn(msg.x, msg.y)) {
@@ -128,7 +142,8 @@ void Client::play() {
 				if (!gm->doWork(info)) {
 					flushmessage(EM_MOUSE);
 					MessageBox(GetHWnd(), L"此位置不能下棋！", L"错误提示", 0);
-					strLogs.push_back(info.strInfo);
+					loadLog(info.strInfo);
+					//strLogs.push_back(info.strInfo);
 					logOffset = 0;
 					//strLog += info.strInfo;
 					drawLog();
@@ -141,7 +156,8 @@ void Client::play() {
 				}
 				if (info.finish) {
 					if (info.strInfo != L"") {
-						strLogs.push_back(info.strInfo);
+						loadLog(info.strInfo);
+						//strLogs.push_back(info.strInfo);
 						logOffset = 0;
 						drawLog();
 					}
@@ -194,7 +210,8 @@ void Client::play() {
 					break;
 				}
 				if (info.strInfo != L"") {
-					strLogs.push_back(info.strInfo);
+					loadLog(info.strInfo);
+					//strLogs.push_back(info.strInfo);
 					logOffset = 0;
 					drawLog();
 				}
@@ -220,7 +237,8 @@ void Client::play() {
 				//合法判断
 				if (state >= num || state < 0) {
 					MessageBox(GetHWnd(), L"输入错误，没有该存档！", L"", 0);
-					strLogs.push_back(L"选择存档输入错误！\n");
+					//strLogs.push_back(L"选择存档输入错误！\n");
+					loadLog(info.strInfo);
 					logOffset = 0;
 					drawLog();
 				}
@@ -242,7 +260,8 @@ void Client::play() {
 				info.turn = turn;
 				gm->doWork(info);
 				if (info.strInfo != L"") {
-					strLogs.push_back(info.strInfo);
+					//strLogs.push_back(info.strInfo);
+					loadLog(info.strInfo); 
 					logOffset = 0;
 					drawLog();
 				}
